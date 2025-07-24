@@ -14,7 +14,7 @@ export default function Hero() {
       <section className="bg-black relative mt-4">
         <div className="max-w-4xl mx-auto">
           {/* Imagen con degradado y contenido superpuesto */}
-          <div className="relative w-full h-[60vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
+          <div className="relative w-full h-[80vh] md:h-[60vh] lg:h-[80vh] overflow-hidden">
             <img
               src="/images/foto-perfil.png"
               alt="Daniyer Mendoca - Vigilante de Seguridad"
@@ -22,7 +22,7 @@ export default function Hero() {
             />
 
             {/* Contenido sobre la imagen */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 flex flex-col items-center justify-center text-white text-center px-4 pb-4">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 flex flex-col items-center justify-center text-white text-center px-2 pb-4">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg mb-0 mt-30">Daniyer Mendoca</h1>
               <p className="text-lg md:text-xl font-medium text-white/90 mb-1">Vigilante de Seguridad y Escolta Profesional</p>
               <p className="text-sm md:text-base max-w-2xl text-white/80 leading-relaxed mb-6">
