@@ -23,4 +23,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+
+/* Para el fade-bottom si lo sigues usando en otro punto */
+.fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  mask-repeat: no-repeat;
+}
+
+  
+  
 }
