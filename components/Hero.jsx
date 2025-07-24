@@ -5,13 +5,13 @@ import WorkExperience from "./WorkExperience"
 import SkillsCompetencies from "./SkillsCompetencies"
 import CoursesCarousel from "./CoursesCarousel"
 import ExcelDownload from "./ExcelDownload"
-import { Download } from "lucide-react";
+import { Download,Linkedin } from "lucide-react";
 
 export default function Hero() {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Hero Section con fondo negro solo para la foto */}
-      <section className="bg-black relative">
+      <section className="bg-black relative mt-4">
         <div className="max-w-4xl mx-auto">
           {/* Imagen con degradado y contenido superpuesto */}
           <div className="relative w-full h-[60vh] md:h-[50vh] lg:h-[45vh] overflow-hidden">
@@ -23,7 +23,7 @@ export default function Hero() {
 
             {/* Contenido sobre la imagen */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 flex flex-col items-center justify-center text-white text-center px-4">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg mb-2">Daniyer Mendoca</h1>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg mb-2 mt-20">Daniyer Mendoca</h1>
               <p className="text-lg md:text-xl font-medium text-white/90 mb-1">Vigilante de Seguridad Profesional</p>
               <p className="text-sm md:text-base max-w-2xl text-white/80 leading-relaxed mb-6">
                 Ex-Teniente Militar • 10 años de experiencia • Licenciado en Ciencias y Artes Militares
@@ -31,18 +31,29 @@ export default function Hero() {
               <a
                 href="/documents/curriculo-daniyer.pdf"
                 download
-                className="inline-flex items-center gap-2 px-5 py-4 border border-white text-white rounded-xl hover:bg-white hover:text-black transition duration-300"
+                className="inline-flex items-center gap-2 px-5 py-4 border border-white text-white rounded-xl hover:bg-white hover:text-black transition duration-300 text-xs"
     >
-                 <Download className="w-5 h-5" />
+                 <Download className="w-5 h-4 " />
                   Descargar CV
               </a>
+
+               <a
+                  href="https://www.linkedin.com/in/daniyer-mendo%C3%A7a-2babba313"
+                   target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-4 border border-white text-white rounded-xl hover:bg-white hover:text-black transition duration-300 mt-4 text-xs"
+                >
+                 <Linkedin className="w-4 h-4" />
+                   Ver mi LinkedIn
+                </a>
+
             </div>
           </div>
         </div>
       </section>
 
       {/* Contenido principal con fondo claro */}
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-4xl mx-auto px-4 pt-8 pb-2space-y-8">
         <PersonalInfo />
         <UniversityDegree />
         <AboutSection />
@@ -51,8 +62,16 @@ export default function Hero() {
         <CoursesCarousel />
         <ExcelDownload />
       </div>
+
+      <div className="h-16 bg-gray-900 text-white flex items-center justify-center">
+          <p className="text-center text-gray-300 text-sm mt-0">
+            "De la exigencia nace la excelencia" <br/>-Daniyer Mendoca</p>
+            
+        
+        </div>
+
       <div className="h-16">
-          <p className="text-center text-gray-500 text-sm mt-4">
+          <p className="text-center text-gray-700 text-sm mt-10 mb-0">
             © 2025 Hecho con cariño por Maurizio Caballero.</p>
         
         </div> {/* Espacio para el footer */}

@@ -44,6 +44,8 @@ export default function ExcelDownload() {
           <p className="text-gray-700 mb-4 leading-relaxed">
             Herramienta profesional para el control y seguimiento de gastos personales. Incluye categorización
             automática, gráficos dinámicos y análisis mensual de tus finanzas.
+
+            
           </p>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
