@@ -15,6 +15,8 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Daniyer CV",
   description: "Curriculo de Daniyer Mendoca - Vigilante de Seguridad Profesional",
+  url: "https://daniyer.online", // Pon tu URL
+    type: "website",
   icons: {
     icon: "/images/favicon.jpg"
   },
