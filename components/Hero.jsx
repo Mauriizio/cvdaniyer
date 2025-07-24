@@ -29,7 +29,7 @@ export default function Hero() {
                 Ex-Teniente Militar • 10 años de experiencia • Licenciado en Ciencias y Artes Militares
               </p>
               <a
-                href="/cv.pdf"
+                href="/documents/curriculo-daniyer.pdf"
                 download
                 className="inline-flex items-center gap-2 px-5 py-4 border border-white text-white rounded-xl hover:bg-white hover:text-black transition duration-300"
     >

@@ -16,21 +16,119 @@ export default function CoursesCarousel() {
         "Certificación oficial para trabajar como vigilante de seguridad privada y escolta personal en España.",
       type: "Certificación Profesional",
       level: "Nivel 4 EQF-MEC",
-      image: "/placeholder.svg?height=200&width=300&text=Certificado+Vigilante+Seguridad",
+      image: "/images/certificado (1).png",
       imageAlt: "Certificado de Vigilante de Seguridad Privada",
     },
+
     {
-      title: "Formación Militar Complementaria",
-      institution: "Academia Militar de la Guardia Nacional Bolivariana",
-      year: "2013-2023",
-      location: "Venezuela",
+      title: "Acreditacion como Administrador de Parques de Armas, Elaboracion de Poligonos N° 120. Uso y Empleo Sistemas de Armas Portatiles. ",
+      institution: "Direccion General de Armas y Explosivos.",
+      year: "Septiembre 2021",
+      location: "San Felipe, Venezuela",
       description:
-        "Cursos especializados en táctica militar, liderazgo de equipos, manejo de crisis y procedimientos de seguridad.",
-      type: "Formación Militar",
+        "Certificado como Administrador de Parques de Armas, con conocimientos en la elaboración de polígonos y uso de sistemas de armas portátiles asignados a la funcion de seguridad y defensa.",
       level: "Nivel Avanzado",
-      image: "/placeholder.svg?height=200&width=300&text=Certificados+Militares",
-      imageAlt: "Certificados de Formación Militar",
+      image: "/images/certificado (13).png",
+      imageAlt: "Certificado Administrador de Parques de Armas.",
     },
+
+    {
+      title: "Curso de Guerra Irregular «LINCE».",
+      institution: "Grupo de Acciones de Comando de la Guardia Nacional Bolivariana",
+      year: "Julio 2015",
+      location: "Macarao, Venezuela",
+      description:
+        "Curso de Guerra Irregular para operaciones especiales y tácticas avanzadas.",
+      type: "Adiestramiento Profesional",
+      level: "Nivel Avanzado",
+      image: "/images/certificado (5).png",
+      imageAlt: "Certificado GAC GNB",
+    },
+
+    {
+      title: "Curso de Helitactica.",
+      institution: "Grupo de Acciones de Comando de la Guardia Nacional Bolivariana",
+      year: "Sep-Oct 2015",
+      location: "Macarao, Venezuela",
+      description:
+        "Curso de Helitáctica para operaciones aéreas y tácticas con helicópteros.",
+      type: "Adiestramiento Profesional",
+      level: "Nivel Avanzado",
+      image: "/images/certificado (10).png",
+      imageAlt: "Certificado GAC GNB",
+    },
+
+     {
+      title: "Curso de Investigacion Penal",
+      institution: "Servicio de Policia de Investigacion Penal de Delitos Financieros",
+      year: "Mayo 2017",
+      location: "Caracas, Venezuela",
+      description:
+        "Certificacion en investigacion penal de delitos financieros, enfocado en la seguridad y vigilancia.",
+      type: "Adiestramiento Profesional",
+      level: "Nivel Avanzado",
+      image: "/images/certificado (11).png",
+      imageAlt: "Certificado Policia de Investicacion Penal",
+    },
+
+
+    {
+      title: "Adiestramiento de perfilamiento y revision de vehiculos.",
+      institution: "Direccion de Apresto Operacional y Comando Nacional Antidrogas GNB",
+      year: "Abril 2021",
+      location: "Caracas, Venezuela",
+      description:
+        "Certificación oficial en técnicas de perfilamiento y revisión de vehículos en materia de combate contra el trafico ilicito de drogas.",
+      type: "Adiestramiento Profesional",
+      level: "Nivel Avanzado",
+      image: "/images/certificado (1).png",
+      imageAlt: "Certificado GNB",
+    },
+
+
+{
+      title: "Taller de Manejo Defensivo.",
+      institution: "Cuerpo de Policia Nacional Bolivariana",
+      year: "Mayo 2017",
+      location: "Caracas, Venezuela",
+      description:
+        "Curso de Manejo Defensivo para la prevención de accidentes y mejora de la seguridad vial.",
+      type: "Adiestramiento Profesional",
+      level: "Nivel Profesional",
+      image: "/images/certificado (2).png",
+      imageAlt: "Certificado PNB",
+    },
+
+    {
+      title: "Curso de Rapel y Montañismo.",
+      institution: "Grupo de Acciones de Comando de la Guardia Nacional Bolivariana",
+      year: "Octubre 2015",
+      location: "Macarao, Venezuela",
+      description:
+        "Curso de Rapel y Montañismo para operaciones de rescate y seguridad en terrenos difíciles.",
+      type: "Adiestramiento Profesional",
+      level: "Nivel Avanzado",
+      image: "/images/certificado (3).png",
+      imageAlt: "Certificado GAC GNB",
+    },
+
+    
+    {
+      title: "Servicio Comunitario de Educacion Superior",
+      institution: "Academia Militar de la Guardia Nacional Bolivariana",
+      year: "Mayo 2017",
+      location: "Caracas, Venezuela",
+      description:
+        "Certificado de Participacion en Jornada de Servicio Comunitario para la formación de líderes y promotores sociales.",
+      type: "Servicio Comunitario",
+      level: "Nivel Servicio Social",
+      image: "/images/certificado (9).png",
+      imageAlt: "Servicio Comunitario Militar",
+    },
+    
+
+    
+    
   ]
 
   const nextSlide = () => {

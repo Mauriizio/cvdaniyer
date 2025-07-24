@@ -18,7 +18,7 @@ export default function UniversityDegree() {
               onClick={() => setIsModalOpen(true)}
             >
               <img
-                src="/placeholder.svg?height=250&width=350&text=Título+Universitario"
+                src="/images/certificado (1).png"
                 alt="Título de Licenciado en Ciencias y Artes Militares"
                 className="w-full h-auto rounded"
               />
@@ -70,7 +70,7 @@ export default function UniversityDegree() {
       <ImageModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        imageSrc="/placeholder.svg?height=600&width=800&text=Título+Universitario+Completo"
+        imageSrc="/images/certificado (1).png"
         imageAlt="Título de Licenciado en Ciencias y Artes Militares"
         title="Licenciado en Ciencias y Artes Militares - Mención Administración Pública"
       />
