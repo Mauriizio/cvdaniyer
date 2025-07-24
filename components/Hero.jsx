@@ -51,6 +51,11 @@ export default function Hero() {
         <CoursesCarousel />
         <ExcelDownload />
       </div>
+      <div className="h-16">
+          <p className="text-center text-gray-500 text-sm mt-4">
+            © 2025 Hecho con cariño por Maurizio Caballero.</p>
+        
+        </div> {/* Espacio para el footer */}
     </div>
   )
 }

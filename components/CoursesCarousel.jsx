@@ -8,15 +8,15 @@ export default function CoursesCarousel() {
 
   const courses = [
     {
-      title: "Curso de Vigilante de Seguridad Privada y Escolta Personal",
+      title: "Certificiación de Profesionalidad en Vigilancia, Seguridad Privada y Protección de Personas.",
       institution: "FORMAEMPLEAN",
-      year: "Diciembre 2024",
+      year: "Agosto 2024",
       location: "Madrid, España",
       description:
-        "Certificación oficial para trabajar como vigilante de seguridad privada y escolta personal en España.",
+        "Certificación oficial para trabajar como vigilante de seguridad privada y proteccion de personal en España.",
       type: "Certificación Profesional",
-      level: "Nivel 4 EQF-MEC",
-      image: "/images/certificado (1).png",
+      level: "Nivel de Cualificacion 2",
+      image: "/images/certificado.png",
       imageAlt: "Certificado de Vigilante de Seguridad Privada",
     },
 

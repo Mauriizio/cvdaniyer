@@ -3,12 +3,29 @@ import { useState } from "react"
 
 export default function ExcelDownload() {
   const [downloads, setDownloads] = useState(127) // Contador inicial
+  const [isDownloading, setIsDownloading] = useState(false)
 
   const handleDownload = () => {
-    // Simular descarga
+    setIsDownloading(true)
+
+    // Crear un enlace temporal para descargar el archivo
+    const link = document.createElement("a")
+    link.href = "/documents/control-finanzas.xlsx" // Tu archivo en public/documents/
+    link.download = "Control-Finanzas-Daniyer-Mendoca.xlsx" // Nombre personalizado para la descarga
+    link.target = "_blank" // Abrir en nueva pestaña como respaldo
+
+    // Agregar el enlace al DOM, hacer clic y removerlo
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    // Incrementar contador y resetear estado
     setDownloads((prev) => prev + 1)
-    // Aquí iría la lógica real de descarga
-    console.log("Descargando archivo Excel...")
+
+    // Pequeño delay para mostrar el estado de descarga
+    setTimeout(() => {
+      setIsDownloading(false)
+    }, 1000)
   }
 
   return (
@@ -18,11 +35,7 @@ export default function ExcelDownload() {
       <div className="flex flex-col md:flex-row items-center gap-6">
         <div className="w-full md:w-1/3">
           <div className="bg-white p-4 rounded-lg shadow-sm border-2 border-gray-200">
-            <img
-              src="/placeholder.svg?height=200&width=300"
-              alt="Plantilla Excel Control de Gastos"
-              className="w-full h-auto rounded"
-            />
+            <img src="/images/excel.png" alt="Plantilla Excel Control de Gastos" className="w-full h-auto rounded" />
           </div>
         </div>
 
@@ -36,17 +49,34 @@ export default function ExcelDownload() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <button
               onClick={handleDownload}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2"
+              disabled={isDownloading}
+              className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-              Descargar Gratis
+              {isDownloading ? (
+                <>
+                  <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                  Descargando...
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Descargar Gratis
+                </>
+              )}
             </button>
 
             <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -62,7 +92,9 @@ export default function ExcelDownload() {
             </div>
           </div>
 
-          <div className="mt-3 text-xs text-gray-500">Formato: .xlsx | Tamaño: ~2MB | Compatible con Excel 2016+</div>
+          <div className="mt-3 text-xs text-gray-500">
+            Formato: .xlsx | Tamaño: ~2MB | Compatible con Excel 2016+ | Creado por Daniyer Mendoca
+          </div>
         </div>
       </div>
     </section>
