@@ -18,6 +18,8 @@ export const metadata = {
   icons: {
     icon: "/images/favicon.jpg"
   },
+
+  
 }
 export default function RootLayout({ children }) {
   return (
