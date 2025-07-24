@@ -14,7 +14,7 @@ export default function Hero() {
       <section className="bg-black relative mt-4">
         <div className="max-w-4xl mx-auto">
           {/* Imagen con degradado y contenido superpuesto */}
-          <div className="relative w-full h-[60vh] md:h-[50vh] lg:h-[45vh] overflow-hidden">
+          <div className="relative w-full h-[60vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
             <img
               src="/images/foto-perfil.png"
               alt="Daniyer Mendoca - Vigilante de Seguridad"
@@ -22,11 +22,13 @@ export default function Hero() {
             />
 
             {/* Contenido sobre la imagen */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 flex flex-col items-center justify-center text-white text-center px-4">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg mb-2 mt-20">Daniyer Mendoca</h1>
-              <p className="text-lg md:text-xl font-medium text-white/90 mb-1">Vigilante de Seguridad Profesional</p>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 flex flex-col items-center justify-center text-white text-center px-4 pb-4">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg mb-0 mt-30">Daniyer Mendoca</h1>
+              <p className="text-lg md:text-xl font-medium text-white/90 mb-1">Vigilante de Seguridad y Escolta Profesional</p>
               <p className="text-sm md:text-base max-w-2xl text-white/80 leading-relaxed mb-6">
-                Ex-Teniente Militar • 10 años de experiencia • Licenciado en Ciencias y Artes Militares
+                • Militar Retirado <br/>
+                • Lcdo. en Ciencias y Artes Militares<br/>
+                • 10 años de experiencia 
               </p>
               <a
                 href="/documents/curriculo-daniyer.pdf"
@@ -41,7 +43,7 @@ export default function Hero() {
                   href="https://www.linkedin.com/in/daniyer-mendo%C3%A7a-2babba313"
                    target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-4 border border-white text-white rounded-xl hover:bg-white hover:text-black transition duration-300 mt-4 text-xs"
+                  className="inline-flex items-center gap-2 px-5 py-4 border border-white text-white rounded-xl hover:bg-white hover:text-black transition duration-300 my-4 text-xs"
                 >
                  <Linkedin className="w-4 h-4" />
                    Ver mi LinkedIn
