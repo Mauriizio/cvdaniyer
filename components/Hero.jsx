@@ -74,7 +74,7 @@ export default function Hero() {
 
       <footer className="h-16">
           <p className="text-center text-gray-700 text-sm mt-10 mb-0">
-            © 2025 Hecho con cariño por Maurizio Caballero.</p>
+            © 2025 Hecho por Maurizio Caballero.</p>
         
         </footer> {/* Espacio para el footer */}
     </div>
