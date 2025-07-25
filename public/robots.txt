@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://daniyer.online
+
+# Sitemaps
+Sitemap: https://daniyer.online/sitemap.xml

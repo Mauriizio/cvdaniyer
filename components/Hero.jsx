@@ -14,7 +14,7 @@ export default function Hero() {
       <section className="bg-black relative mt-4">
         <div className="max-w-4xl mx-auto">
           {/* Imagen con degradado y contenido superpuesto */}
-          <div className="relative w-full h-[60vh] md:h-[60vh] lg:h-[80vh] overflow-hidden">
+          <div className="relative w-full h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
             <img
               src="/images/foto-perfil.png"
               alt="Daniyer Mendoca - Vigilante de Seguridad"
@@ -55,7 +55,7 @@ export default function Hero() {
       </section>
 
       {/* Contenido principal con fondo claro */}
-      <div className="max-w-4xl mx-auto px-4 pt-8 pb-2space-y-8">
+      <div className="max-w-4xl mx-auto px-4 pt-8 pb-2 space-y-8">
         <PersonalInfo />
         <UniversityDegree />
         <AboutSection />
@@ -72,11 +72,11 @@ export default function Hero() {
         
         </div>
 
-      <div className="h-16">
+      <footer className="h-16">
           <p className="text-center text-gray-700 text-sm mt-10 mb-0">
             © 2025 Hecho con cariño por Maurizio Caballero.</p>
         
-        </div> {/* Espacio para el footer */}
+        </footer> {/* Espacio para el footer */}
     </div>
   )
 }

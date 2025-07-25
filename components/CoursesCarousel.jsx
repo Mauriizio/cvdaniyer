@@ -10,23 +10,24 @@ export default function CoursesCarousel() {
     {
       title: "Certificiación de Profesionalidad en Vigilancia, Seguridad Privada y Protección de Personas.",
       institution: "FORMAEMPLEAN",
-      year: "Agosto 2024",
+      year: "Agt. 2024",
       location: "Madrid, España",
       description:
         "Certificación oficial para trabajar como vigilante de seguridad privada y proteccion de personal en España.",
-      type: "Certificación Profesional",
+      type: "Certificación",
       level: "Nivel de Cualificacion 2",
       image: "/images/certificado.png",
       imageAlt: "Certificado de Vigilante de Seguridad Privada",
     },
 
     {
-      title: "Acreditacion como Administrador de Parques de Armas, Elaboracion de Poligonos N° 120. Uso y Empleo Sistemas de Armas Portatiles. ",
+      title: "Acreditacion como Administrador de Parques de Armas. ",
       institution: "Direccion General de Armas y Explosivos.",
-      year: "Septiembre 2021",
+      year: "Sept. 2021",
       location: "San Felipe, Venezuela",
       description:
         "Certificado como Administrador de Parques de Armas, con conocimientos en la elaboración de polígonos y uso de sistemas de armas portátiles asignados a la funcion de seguridad y defensa.",
+        type: "Certificación",
       level: "Nivel Avanzado",
       image: "/images/certificado (13).png",
       imageAlt: "Certificado Administrador de Parques de Armas.",
@@ -35,11 +36,11 @@ export default function CoursesCarousel() {
     {
       title: "Curso de Guerra Irregular «LINCE».",
       institution: "Grupo de Acciones de Comando de la Guardia Nacional Bolivariana",
-      year: "Julio 2015",
+      year: "Jul. 2015",
       location: "Macarao, Venezuela",
       description:
         "Curso de Guerra Irregular para operaciones especiales y tácticas avanzadas.",
-      type: "Adiestramiento Profesional",
+      type: "Adiestramiento",
       level: "Nivel Avanzado",
       image: "/images/certificado (5).png",
       imageAlt: "Certificado GAC GNB",
@@ -48,11 +49,11 @@ export default function CoursesCarousel() {
     {
       title: "Curso de Helitactica.",
       institution: "Grupo de Acciones de Comando de la Guardia Nacional Bolivariana",
-      year: "Sep-Oct 2015",
+      year: "Oct. 2015",
       location: "Macarao, Venezuela",
       description:
         "Curso de Helitáctica para operaciones aéreas y tácticas con helicópteros.",
-      type: "Adiestramiento Profesional",
+      type: "Adiestramiento",
       level: "Nivel Avanzado",
       image: "/images/certificado (10).png",
       imageAlt: "Certificado GAC GNB",
@@ -61,11 +62,11 @@ export default function CoursesCarousel() {
      {
       title: "Curso de Investigacion Penal",
       institution: "Servicio de Policia de Investigacion Penal de Delitos Financieros",
-      year: "Mayo 2017",
+      year: "May. 2017",
       location: "Caracas, Venezuela",
       description:
         "Certificacion en investigacion penal de delitos financieros, enfocado en la seguridad y vigilancia.",
-      type: "Adiestramiento Profesional",
+      type: "Adiestramiento",
       level: "Nivel Avanzado",
       image: "/images/certificado (11).png",
       imageAlt: "Certificado Policia de Investicacion Penal",
@@ -75,11 +76,11 @@ export default function CoursesCarousel() {
     {
       title: "Adiestramiento de perfilamiento y revision de vehiculos.",
       institution: "Direccion de Apresto Operacional y Comando Nacional Antidrogas GNB",
-      year: "Abril 2021",
+      year: "Abr. 2021",
       location: "Caracas, Venezuela",
       description:
         "Certificación oficial en técnicas de perfilamiento y revisión de vehículos en materia de combate contra el trafico ilicito de drogas.",
-      type: "Adiestramiento Profesional",
+      type: "Adiestramiento",
       level: "Nivel Avanzado",
       image: "/images/certificado (1).png",
       imageAlt: "Certificado GNB",
@@ -89,11 +90,11 @@ export default function CoursesCarousel() {
 {
       title: "Taller de Manejo Defensivo.",
       institution: "Cuerpo de Policia Nacional Bolivariana",
-      year: "Mayo 2017",
+      year: "May. 2017",
       location: "Caracas, Venezuela",
       description:
         "Curso de Manejo Defensivo para la prevención de accidentes y mejora de la seguridad vial.",
-      type: "Adiestramiento Profesional",
+      type: "Adiestramiento",
       level: "Nivel Profesional",
       image: "/images/certificado (2).png",
       imageAlt: "Certificado PNB",
@@ -102,11 +103,11 @@ export default function CoursesCarousel() {
     {
       title: "Curso de Rapel y Montañismo.",
       institution: "Grupo de Acciones de Comando de la Guardia Nacional Bolivariana",
-      year: "Octubre 2015",
+      year: "Oct. 2015",
       location: "Macarao, Venezuela",
       description:
         "Curso de Rapel y Montañismo para operaciones de rescate y seguridad en terrenos difíciles.",
-      type: "Adiestramiento Profesional",
+      type: "Adiestramiento",
       level: "Nivel Avanzado",
       image: "/images/certificado (3).png",
       imageAlt: "Certificado GAC GNB",
@@ -116,11 +117,11 @@ export default function CoursesCarousel() {
     {
       title: "Servicio Comunitario de Educacion Superior",
       institution: "Academia Militar de la Guardia Nacional Bolivariana",
-      year: "Mayo 2017",
+      year: "May. 2017",
       location: "Caracas, Venezuela",
       description:
         "Certificado de Participacion en Jornada de Servicio Comunitario para la formación de líderes y promotores sociales.",
-      type: "Servicio Comunitario",
+      type: "Servicio",
       level: "Nivel Servicio Social",
       image: "/images/certificado (9).png",
       imageAlt: "Servicio Comunitario Militar",
@@ -194,9 +195,10 @@ export default function CoursesCarousel() {
                       {/* Información del curso - Lado derecho */}
                       <div className="w-full md:w-2/3">
                         <div className="flex justify-between items-start mb-3">
-                          <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                          <span className="bg-blue-600 text-white px-2 py-1 text-center rounded-full text-xs font-medium">
                             {course.type}
                           </span>
+
                           <span className="text-blue-600 font-semibold">{course.year}</span>
                         </div>
 

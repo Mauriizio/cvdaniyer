@@ -12,24 +12,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Daniyer CV",
-  description: "Curriculo de Daniyer Mendoca - Vigilante de Seguridad Profesional",
-  url: "https://daniyer.online", // Pon tu URL
-    type: "website",
-  icons: {
-    icon: "/images/favicon.jpg"
-  },
-
-  
-}
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 text-gray-900 overflow-x-hidden`}
       >
-        
         {children}
       </body>
     </html>
