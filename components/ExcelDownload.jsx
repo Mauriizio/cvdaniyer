@@ -1,31 +1,63 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function ExcelDownload() {
-  const [downloads, setDownloads] = useState(127) // Contador inicial
+  const [downloads, setDownloads] = useState(0)
   const [isDownloading, setIsDownloading] = useState(false)
+  const [isLoadingCount, setIsLoadingCount] = useState(true)
+  const [countError, setCountError] = useState(false)
 
-  const handleDownload = () => {
-    setIsDownloading(true)
+  useEffect(() => {
+    const fetchDownloads = async () => {
+      try {
+        const response = await fetch("/api/downloads")
+        if (!response.ok) {
+          throw new Error("Failed to fetch downloads count")
+        }
+        const data = await response.json()
+        setDownloads(typeof data.count === "number" ? data.count : 0)
+        setCountError(false)
+      } catch (error) {
+        console.error("Error loading downloads count", error)
+        setCountError(true)
+      } finally {
+        setIsLoadingCount(false)
+      }
+    }
 
-    // Crear un enlace temporal para descargar el archivo
+    fetchDownloads()
+  }, [])
+
+  const triggerFileDownload = () => {
     const link = document.createElement("a")
-    link.href = "/documents/control-finanzas.xlsx" // Tu archivo en public/documents/
-    link.download = "Control-Finanzas-Daniyer-Mendoca.xlsx" // Nombre personalizado para la descarga
-    link.target = "_blank" // Abrir en nueva pestaña como respaldo
-
-    // Agregar el enlace al DOM, hacer clic y removerlo
+    link.href = "/documents/control-finanzas.xlsx"
+    link.download = "Control-Finanzas-Daniyer-Mendoca.xlsx"
+    link.target = "_blank"
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
+  }
 
-    // Incrementar contador y resetear estado
-    setDownloads((prev) => prev + 1)
+  const handleDownload = async () => {
+    setIsDownloading(true)
 
-    // Pequeño delay para mostrar el estado de descarga
-    setTimeout(() => {
-      setIsDownloading(false)
-    }, 1000)
+    try {
+      const response = await fetch("/api/downloads", { method: "POST" })
+      if (!response.ok) {
+        throw new Error("Failed to update downloads count")
+      }
+      const data = await response.json()
+      setDownloads((current) => (typeof data.count === "number" ? data.count : current + 1))
+      setCountError(false)
+    } catch (error) {
+      console.error("Error updating downloads count", error)
+      setCountError(true)
+    } finally {
+      triggerFileDownload()
+      setTimeout(() => {
+        setIsDownloading(false)
+      }, 1000)
+    }
   }
 
   return (
@@ -44,8 +76,6 @@ export default function ExcelDownload() {
           <p className="text-gray-700 mb-4 leading-relaxed">
             Herramienta profesional para el control y seguimiento de gastos personales. Incluye categorización
             automática, gráficos dinámicos y análisis mensual de tus finanzas.
-
-            
           </p>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -90,7 +120,13 @@ export default function ExcelDownload() {
                   d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
                 />
               </svg>
-              <span>{downloads} descargas</span>
+              <span>
+                {isLoadingCount
+                  ? "Cargando..."
+                  : countError
+                  ? "Conteo no disponible"
+                  : `${downloads} descargas`}
+              </span>
             </div>
           </div>
 
