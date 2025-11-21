@@ -1,31 +1,168 @@
 "use client"
-import { useState } from "react"
+
+import { useEffect, useRef, useState } from "react"
+import downloadsSeed from "../data/downloads.json"
+
+const LOCAL_STORAGE_KEY = "excel-download-count"
 
 export default function ExcelDownload() {
-  const [downloads, setDownloads] = useState(127) // Contador inicial
+  const fallbackCount = typeof downloadsSeed?.count === "number" ? downloadsSeed.count : 0
+  const [downloads, setDownloads] = useState(fallbackCount)
   const [isDownloading, setIsDownloading] = useState(false)
+  const [isLoadingCount, setIsLoadingCount] = useState(true)
+  const [countError, setCountError] = useState(false)
+  const [syncWarning, setSyncWarning] = useState(false)
+  const isMountedRef = useRef(true)
 
-  const handleDownload = () => {
-    setIsDownloading(true)
+  const persistCount = (value) => {
+    if (typeof window === "undefined") {
+      return
+    }
 
-    // Crear un enlace temporal para descargar el archivo
+    try {
+      window.localStorage.setItem(LOCAL_STORAGE_KEY, String(value))
+    } catch (error) {
+      console.warn("Unable to persist download count locally", error)
+    }
+  }
+
+  const hydrateFromLocalStorage = () => {
+    if (typeof window === "undefined") {
+      return
+    }
+
+    try {
+      const storedValue = window.localStorage.getItem(LOCAL_STORAGE_KEY)
+      if (storedValue) {
+        const parsedValue = Number.parseInt(storedValue, 10)
+        if (Number.isFinite(parsedValue) && parsedValue > fallbackCount && isMountedRef.current) {
+          setDownloads(parsedValue)
+        }
+      }
+    } catch (error) {
+      console.warn("Unable to read download count from localStorage", error)
+    }
+  }
+
+  const registerLocalDownload = () => {
+    if (!isMountedRef.current) {
+      return
+    }
+
+    setDownloads((current) => {
+      const nextValue = current + 1
+      persistCount(nextValue)
+      return nextValue
+    })
+  }
+
+  useEffect(() => {
+    isMountedRef.current = true
+    const controller = new AbortController()
+
+    hydrateFromLocalStorage()
+
+    const fetchDownloads = async () => {
+      try {
+        const response = await fetch("/api/downloads", {
+          cache: "no-store",
+          signal: controller.signal,
+        })
+        if (!response.ok) {
+          throw new Error("Failed to fetch downloads count")
+        }
+        const data = await response.json()
+        if (!controller.signal.aborted && isMountedRef.current) {
+          const nextCount = typeof data.count === "number" ? data.count : fallbackCount
+          setDownloads(nextCount)
+          persistCount(nextCount)
+          setSyncWarning(data?.synced === false)
+          setCountError(false)
+        }
+      } catch (error) {
+        console.error("Error loading downloads count", error)
+        if (!controller.signal.aborted && isMountedRef.current) {
+          setCountError(true)
+          setSyncWarning(false)
+          hydrateFromLocalStorage()
+        }
+      } finally {
+        if (!controller.signal.aborted && isMountedRef.current) {
+          setIsLoadingCount(false)
+        }
+      }
+    }
+
+    fetchDownloads()
+
+    return () => {
+      isMountedRef.current = false
+      controller.abort()
+    }
+  }, [fallbackCount])
+
+  const triggerFileDownload = () => {
     const link = document.createElement("a")
-    link.href = "/documents/control-finanzas.xlsx" // Tu archivo en public/documents/
-    link.download = "Control-Finanzas-Daniyer-Mendoca.xlsx" // Nombre personalizado para la descarga
-    link.target = "_blank" // Abrir en nueva pestaña como respaldo
-
-    // Agregar el enlace al DOM, hacer clic y removerlo
+    link.href = "/documents/control-finanzas.xlsx"
+    link.download = "Control-Finanzas-Daniyer-Mendoca.xlsx"
+    link.target = "_blank"
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
+  }
 
-    // Incrementar contador y resetear estado
-    setDownloads((prev) => prev + 1)
+  const handleDownload = async () => {
+    if (!isMountedRef.current) {
+      return
+    }
 
-    // Pequeño delay para mostrar el estado de descarga
-    setTimeout(() => {
-      setIsDownloading(false)
-    }, 1000)
+    setIsDownloading(true)
+
+    const finalizeDownload = () => {
+      triggerFileDownload()
+      setTimeout(() => {
+        if (isMountedRef.current) {
+          setIsDownloading(false)
+        }
+      }, 1000)
+    }
+
+    try {
+      if (!syncWarning) {
+        const response = await fetch("/api/downloads", { method: "POST" })
+        if (!response.ok) {
+          throw new Error("Failed to update downloads count")
+        }
+        const data = await response.json()
+        if (isMountedRef.current) {
+          const isSynced = data?.synced !== false
+          if (isSynced) {
+            setDownloads((current) => {
+              const nextValue = typeof data.count === "number" ? data.count : current + 1
+              persistCount(nextValue)
+              return nextValue
+            })
+            setCountError(false)
+            setSyncWarning(false)
+          } else {
+            setCountError(false)
+            setSyncWarning(true)
+            registerLocalDownload()
+          }
+        }
+      } else {
+        registerLocalDownload()
+      }
+    } catch (error) {
+      console.error("Error updating downloads count", error)
+      if (isMountedRef.current) {
+        setCountError(true)
+        setSyncWarning(true)
+        registerLocalDownload()
+      }
+    } finally {
+      finalizeDownload()
+    }
   }
 
   return (
@@ -42,16 +179,16 @@ export default function ExcelDownload() {
         <div className="w-full md:w-2/3">
           <h3 className="text-xl font-semibold text-gray-800 mb-3">Plantilla Excel: Control de Gastos Personales</h3>
           <p className="text-gray-700 mb-4 leading-relaxed">
-            Herramienta profesional para el control y seguimiento de gastos personales. Incluye categorización
-            automática, gráficos dinámicos y análisis mensual de tus finanzas.
-
-            
+            Herramienta profesional para el control y seguimiento de gastos personales. Incluye categorización automática,
+            gráficos dinámicos y análisis mensual de tus finanzas.
           </p>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <button
+              type="button"
               onClick={handleDownload}
               disabled={isDownloading}
+              aria-label="Descargar plantilla de control financiero en Excel"
               className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2"
             >
               {isDownloading ? (
@@ -81,7 +218,7 @@ export default function ExcelDownload() {
               )}
             </button>
 
-            <div className="flex items-center gap-2 text-sm text-gray-600">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm text-gray-600" aria-live="polite">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -90,7 +227,19 @@ export default function ExcelDownload() {
                   d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
                 />
               </svg>
-              <span>{downloads} descargas</span>
+              {isLoadingCount ? (
+                <span>Cargando...</span>
+              ) : (
+                <>
+                  <span>{`${downloads} descargas`}</span>
+                  {syncWarning && (
+                    <span className="text-xs text-amber-600">Conteo en modo local; se sincronizará cuando sea posible</span>
+                  )}
+                  {countError && !Number.isFinite(downloads) && (
+                    <span className="text-xs text-amber-600">Conteo no disponible</span>
+                  )}
+                </>
+              )}
             </div>
           </div>
 
