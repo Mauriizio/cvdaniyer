@@ -8,6 +8,7 @@ const filePath = path.join(process.cwd(), "data", "downloads.json")
 const READ_ONLY_ERROR_CODES = new Set(["EROFS", "EACCES", "EBADF", "ENOSPC"])
 
 const seedCount = typeof seed?.count === "number" ? seed.count : 0
+const filePath = path.join(process.cwd(), "data", "downloads.json")
 
 async function readCount() {
   try {
@@ -30,6 +31,12 @@ async function readCount() {
     }
     if (READ_ONLY_ERROR_CODES.has(error.code)) {
       return { count: seedCount, synced: false }
+    return typeof parsed.count === "number" ? parsed.count : 0
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      await fs.mkdir(path.dirname(filePath), { recursive: true })
+      await fs.writeFile(filePath, JSON.stringify({ count: 0 }, null, 2), "utf-8")
+      return 0
     }
     console.error("Error reading downloads count:", error)
     throw error
@@ -44,6 +51,8 @@ export async function GET() {
   try {
     const { count, synced } = await readCount()
     return NextResponse.json({ count, synced })
+    const count = await readCount()
+    return NextResponse.json({ count })
   } catch (error) {
     return NextResponse.json({ error: "Unable to read downloads." }, { status: 500 })
   }
@@ -68,6 +77,12 @@ export async function POST() {
       return NextResponse.json({ count: currentCount, synced: false })
     }
 
+  try {
+    const currentCount = await readCount()
+    const updatedCount = currentCount + 1
+    await writeCount(updatedCount)
+    return NextResponse.json({ count: updatedCount })
+  } catch (error) {
     return NextResponse.json({ error: "Unable to update downloads." }, { status: 500 })
   }
 }

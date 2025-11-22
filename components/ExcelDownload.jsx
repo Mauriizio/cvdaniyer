@@ -140,6 +140,35 @@ export default function ExcelDownload() {
     }
   }, [fallbackCount])
 
+import { useEffect, useState } from "react"
+
+export default function ExcelDownload() {
+  const [downloads, setDownloads] = useState(0)
+  const [isDownloading, setIsDownloading] = useState(false)
+  const [isLoadingCount, setIsLoadingCount] = useState(true)
+  const [countError, setCountError] = useState(false)
+
+  useEffect(() => {
+    const fetchDownloads = async () => {
+      try {
+        const response = await fetch("/api/downloads")
+        if (!response.ok) {
+          throw new Error("Failed to fetch downloads count")
+        }
+        const data = await response.json()
+        setDownloads(typeof data.count === "number" ? data.count : 0)
+        setCountError(false)
+      } catch (error) {
+        console.error("Error loading downloads count", error)
+        setCountError(true)
+      } finally {
+        setIsLoadingCount(false)
+      }
+    }
+
+    fetchDownloads()
+  }, [])
+
   const triggerFileDownload = () => {
     const link = document.createElement("a")
     link.href = "/documents/control-finanzas.xlsx"
@@ -179,6 +208,24 @@ export default function ExcelDownload() {
       registerLocalDownload()
     } finally {
       finalizeDownload()
+    setIsDownloading(true)
+
+    try {
+      const response = await fetch("/api/downloads", { method: "POST" })
+      if (!response.ok) {
+        throw new Error("Failed to update downloads count")
+      }
+      const data = await response.json()
+      setDownloads((current) => (typeof data.count === "number" ? data.count : current + 1))
+      setCountError(false)
+    } catch (error) {
+      console.error("Error updating downloads count", error)
+      setCountError(true)
+    } finally {
+      triggerFileDownload()
+      setTimeout(() => {
+        setIsDownloading(false)
+      }, 1000)
     }
   }
 
@@ -200,6 +247,8 @@ export default function ExcelDownload() {
           <p className="text-gray-700 mb-4 leading-relaxed">
             Herramienta profesional para el control y seguimiento de gastos personales. Incluye categorización automática,
             gráficos dinámicos y análisis mensual de tus finanzas.
+            Herramienta profesional para el control y seguimiento de gastos personales. Incluye categorización
+            automática, gráficos dinámicos y análisis mensual de tus finanzas.
           </p>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -256,6 +305,13 @@ export default function ExcelDownload() {
                   )}
                 </>
               )}
+              <span>
+                {isLoadingCount
+                  ? "Cargando..."
+                  : countError
+                  ? "Conteo no disponible"
+                  : `${downloads} descargas`}
+              </span>
             </div>
           </div>
 
