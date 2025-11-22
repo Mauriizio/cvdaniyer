@@ -14,15 +14,15 @@ export default function ExcelDownload() {
   const [isDownloading, setIsDownloading] = useState(false)
   const [isLoadingCount, setIsLoadingCount] = useState(true)
   const [syncWarning, setSyncWarning] = useState(false)
-  const isMountedRef = useRef(true)
+  const isMountedRef = useRef(false)
 
-  const normalizeCount = (value) => (Number.isFinite(value) ? value : fallbackCount)
+  const normalizeCount = (value) => {
+    const n = Number(value)
+    return Number.isFinite(n) && n >= 0 ? n : fallbackCount
+  }
 
   const persistCount = (value) => {
-    if (typeof window === "undefined") {
-      return
-    }
-
+    if (typeof window === "undefined") return
     try {
       window.localStorage.setItem(LOCAL_STORAGE_KEY, String(value))
     } catch (error) {
@@ -31,10 +31,7 @@ export default function ExcelDownload() {
   }
 
   const hydrateFromLocalStorage = () => {
-    if (typeof window === "undefined") {
-      return
-    }
-
+    if (typeof window === "undefined") return
     try {
       const storedValue = window.localStorage.getItem(LOCAL_STORAGE_KEY)
       if (storedValue) {
@@ -49,9 +46,7 @@ export default function ExcelDownload() {
   }
 
   const registerLocalDownload = () => {
-    if (!isMountedRef.current) {
-      return
-    }
+    if (!isMountedRef.current) return
 
     setDownloads((current) => {
       const nextValue = normalizeCount(current) + 1
@@ -140,35 +135,6 @@ export default function ExcelDownload() {
     }
   }, [fallbackCount])
 
-import { useEffect, useState } from "react"
-
-export default function ExcelDownload() {
-  const [downloads, setDownloads] = useState(0)
-  const [isDownloading, setIsDownloading] = useState(false)
-  const [isLoadingCount, setIsLoadingCount] = useState(true)
-  const [countError, setCountError] = useState(false)
-
-  useEffect(() => {
-    const fetchDownloads = async () => {
-      try {
-        const response = await fetch("/api/downloads")
-        if (!response.ok) {
-          throw new Error("Failed to fetch downloads count")
-        }
-        const data = await response.json()
-        setDownloads(typeof data.count === "number" ? data.count : 0)
-        setCountError(false)
-      } catch (error) {
-        console.error("Error loading downloads count", error)
-        setCountError(true)
-      } finally {
-        setIsLoadingCount(false)
-      }
-    }
-
-    fetchDownloads()
-  }, [])
-
   const triggerFileDownload = () => {
     const link = document.createElement("a")
     link.href = "/documents/control-finanzas.xlsx"
@@ -180,9 +146,7 @@ export default function ExcelDownload() {
   }
 
   const handleDownload = async () => {
-    if (!isMountedRef.current) {
-      return
-    }
+    if (!isMountedRef.current) return
 
     setIsDownloading(true)
 
@@ -208,24 +172,6 @@ export default function ExcelDownload() {
       registerLocalDownload()
     } finally {
       finalizeDownload()
-    setIsDownloading(true)
-
-    try {
-      const response = await fetch("/api/downloads", { method: "POST" })
-      if (!response.ok) {
-        throw new Error("Failed to update downloads count")
-      }
-      const data = await response.json()
-      setDownloads((current) => (typeof data.count === "number" ? data.count : current + 1))
-      setCountError(false)
-    } catch (error) {
-      console.error("Error updating downloads count", error)
-      setCountError(true)
-    } finally {
-      triggerFileDownload()
-      setTimeout(() => {
-        setIsDownloading(false)
-      }, 1000)
     }
   }
 
@@ -233,22 +179,28 @@ export default function ExcelDownload() {
 
   return (
     <section className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-green-600 pb-2">Recurso Gratuito</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-green-600 pb-2">
+        Recurso Gratuito
+      </h2>
 
       <div className="flex flex-col md:flex-row items-center gap-6">
         <div className="w-full md:w-1/3">
           <div className="bg-white p-4 rounded-lg shadow-sm border-2 border-gray-200">
-            <img src="/images/excel.png" alt="Plantilla Excel Control de Gastos" className="w-full h-auto rounded" />
+            <img
+              src="/images/excel.png"
+              alt="Plantilla Excel Control de Gastos"
+              className="w-full h-auto rounded"
+            />
           </div>
         </div>
 
         <div className="w-full md:w-2/3">
-          <h3 className="text-xl font-semibold text-gray-800 mb-3">Plantilla Excel: Control de Gastos Personales</h3>
+          <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            Plantilla Excel: Control de Gastos Personales
+          </h3>
           <p className="text-gray-700 mb-4 leading-relaxed">
-            Herramienta profesional para el control y seguimiento de gastos personales. Incluye categorización automática,
-            gráficos dinámicos y análisis mensual de tus finanzas.
-            Herramienta profesional para el control y seguimiento de gastos personales. Incluye categorización
-            automática, gráficos dinámicos y análisis mensual de tus finanzas.
+            Herramienta profesional para el control y seguimiento de gastos personales. Incluye
+            categorización automática, gráficos dinámicos y análisis mensual de tus finanzas.
           </p>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -286,7 +238,10 @@ export default function ExcelDownload() {
               )}
             </button>
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm text-gray-600" aria-live="polite">
+            <div
+              className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm text-gray-600"
+              aria-live="polite"
+            >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -301,17 +256,12 @@ export default function ExcelDownload() {
                 <>
                   <span>{`${displayCount} descargas`}</span>
                   {syncWarning && (
-                    <span className="text-xs text-amber-600">Conteo en modo local; se sincronizará cuando sea posible</span>
+                    <span className="text-xs text-amber-600">
+                      Conteo en modo local; se sincronizará cuando sea posible
+                    </span>
                   )}
                 </>
               )}
-              <span>
-                {isLoadingCount
-                  ? "Cargando..."
-                  : countError
-                  ? "Conteo no disponible"
-                  : `${downloads} descargas`}
-              </span>
             </div>
           </div>
 
