@@ -6,13 +6,15 @@ import downloadsSeed from "../data/downloads.json"
 const LOCAL_STORAGE_KEY = "excel-download-count"
 
 export default function ExcelDownload() {
-  const fallbackCount = typeof downloadsSeed?.count === "number" ? downloadsSeed.count : 0
+  const fallbackCount = Number.isFinite(downloadsSeed?.count) ? downloadsSeed.count : 0
   const [downloads, setDownloads] = useState(fallbackCount)
   const [isDownloading, setIsDownloading] = useState(false)
   const [isLoadingCount, setIsLoadingCount] = useState(true)
   const [countError, setCountError] = useState(false)
   const [syncWarning, setSyncWarning] = useState(false)
   const isMountedRef = useRef(true)
+
+  const normalizeCount = (value) => (Number.isFinite(value) ? value : fallbackCount)
 
   const persistCount = (value) => {
     if (typeof window === "undefined") {
@@ -50,7 +52,7 @@ export default function ExcelDownload() {
     }
 
     setDownloads((current) => {
-      const nextValue = current + 1
+      const nextValue = normalizeCount(current) + 1
       persistCount(nextValue)
       return nextValue
     })
@@ -74,7 +76,7 @@ export default function ExcelDownload() {
         const data = await response.json()
         if (!controller.signal.aborted && isMountedRef.current) {
           const nextCount = typeof data.count === "number" ? data.count : fallbackCount
-          setDownloads(nextCount)
+          setDownloads(normalizeCount(nextCount))
           persistCount(nextCount)
           setSyncWarning(data?.synced === false)
           setCountError(false)
@@ -85,6 +87,7 @@ export default function ExcelDownload() {
           setCountError(true)
           setSyncWarning(false)
           hydrateFromLocalStorage()
+          setDownloads((current) => normalizeCount(current))
         }
       } finally {
         if (!controller.signal.aborted && isMountedRef.current) {
@@ -138,7 +141,7 @@ export default function ExcelDownload() {
           const isSynced = data?.synced !== false
           if (isSynced) {
             setDownloads((current) => {
-              const nextValue = typeof data.count === "number" ? data.count : current + 1
+              const nextValue = normalizeCount(typeof data.count === "number" ? data.count : current + 1)
               persistCount(nextValue)
               return nextValue
             })
@@ -164,6 +167,8 @@ export default function ExcelDownload() {
       finalizeDownload()
     }
   }
+
+  const displayCount = normalizeCount(downloads)
 
   return (
     <section className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg shadow-md p-6">
@@ -231,11 +236,11 @@ export default function ExcelDownload() {
                 <span>Cargando...</span>
               ) : (
                 <>
-                  <span>{`${downloads} descargas`}</span>
+                  <span>{`${displayCount} descargas`}</span>
                   {syncWarning && (
                     <span className="text-xs text-amber-600">Conteo en modo local; se sincronizará cuando sea posible</span>
                   )}
-                  {countError && !Number.isFinite(downloads) && (
+                  {countError && !Number.isFinite(displayCount) && (
                     <span className="text-xs text-amber-600">Conteo no disponible</span>
                   )}
                 </>
