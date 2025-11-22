@@ -254,12 +254,12 @@ export default function ExcelDownload() {
                 <span>Cargando...</span>
               ) : (
                 <>
-                  <span>{`${displayCount} descargas`}</span>
+                  {/* <span>{`${displayCount} descargas`}</span>
                   {syncWarning && (
                     <span className="text-xs text-amber-600">
                       Conteo en modo local; se sincronizará cuando sea posible
                     </span>
-                  )}
+                  )} */}
                 </>
               )}
             </div>

@@ -40,7 +40,7 @@ export default function Hero() {
               </a>
 
                <a
-                  href="https://www.linkedin.com/in/daniyer-mendoca-2babba313?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  href="https://www.linkedin.com/in/daniyer-mendoca-460974390/"
                    target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-4 border border-white text-white rounded-xl hover:bg-white hover:text-black transition duration-300 my-4 text-xs"
