@@ -1,4 +1,5 @@
-import Hero from "/components/Hero.jsx"
+import Hero from '../../components/Hero'
+
 
 export const metadata = {
   title: "Daniyer CV",
